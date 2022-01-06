@@ -12,9 +12,11 @@
 		2177671427871A330055EB2B /* OpenglTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177671327871A330055EB2B /* OpenglTestUITests.m */; };
 		2177671627871A330055EB2B /* OpenglTestUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177671527871A330055EB2B /* OpenglTestUITestsLaunchTests.m */; };
 		2177672427871A9D0055EB2B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2177672327871A9D0055EB2B /* OpenGL.framework */; };
-		2177672627871AA80055EB2B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2177672527871AA80055EB2B /* GLUT.framework */; };
 		2177672827871BFE0055EB2B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2177672727871BFE0055EB2B /* IOKit.framework */; };
-		2177672A27871CD90055EB2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2177672927871CD90055EB2B /* main.cpp */; };
+		2177672C278726540055EB2B /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = 2177672B278726540055EB2B /* glad.c */; };
+		2177672E278726840055EB2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2177672D278726840055EB2B /* main.cpp */; };
+		2177673027872F470055EB2B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2177672F27872F470055EB2B /* Cocoa.framework */; };
+		2177673227872F670055EB2B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2177673127872F670055EB2B /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +48,10 @@
 		2177672327871A9D0055EB2B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2177672527871AA80055EB2B /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		2177672727871BFE0055EB2B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		2177672927871CD90055EB2B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2177672B278726540055EB2B /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glad.c; sourceTree = "<group>"; };
+		2177672D278726840055EB2B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2177672F27872F470055EB2B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2177673127872F670055EB2B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +59,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2177673227872F670055EB2B /* CoreVideo.framework in Frameworks */,
+				2177673027872F470055EB2B /* Cocoa.framework in Frameworks */,
 				2177672827871BFE0055EB2B /* IOKit.framework in Frameworks */,
-				2177672627871AA80055EB2B /* GLUT.framework in Frameworks */,
 				2177672427871A9D0055EB2B /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,7 +86,6 @@
 		217766E727871A310055EB2B = {
 			isa = PBXGroup;
 			children = (
-				2177672927871CD90055EB2B /* main.cpp */,
 				217766F227871A310055EB2B /* OpenglTest */,
 				2177670827871A330055EB2B /* OpenglTestTests */,
 				2177671227871A330055EB2B /* OpenglTestUITests */,
@@ -102,6 +107,8 @@
 		217766F227871A310055EB2B /* OpenglTest */ = {
 			isa = PBXGroup;
 			children = (
+				2177672B278726540055EB2B /* glad.c */,
+				2177672D278726840055EB2B /* main.cpp */,
 				217766F927871A320055EB2B /* Assets.xcassets */,
 				2177670027871A320055EB2B /* OpenglTest.entitlements */,
 			);
@@ -128,6 +135,8 @@
 		2177672227871A9D0055EB2B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2177673127872F670055EB2B /* CoreVideo.framework */,
+				2177672F27872F470055EB2B /* Cocoa.framework */,
 				2177672727871BFE0055EB2B /* IOKit.framework */,
 				2177672527871AA80055EB2B /* GLUT.framework */,
 				2177672327871A9D0055EB2B /* OpenGL.framework */,
@@ -263,7 +272,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2177672A27871CD90055EB2B /* main.cpp in Sources */,
+				2177672E278726840055EB2B /* main.cpp in Sources */,
+				2177672C278726540055EB2B /* glad.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
