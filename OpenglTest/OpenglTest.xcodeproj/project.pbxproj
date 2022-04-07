@@ -443,6 +443,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "-lGLFW3";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zybang.OpenglTest;
@@ -473,6 +474,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "-lGLFW3";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zybang.OpenglTest;
