@@ -22,9 +22,19 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
+    0.5f, 0.5f, 0.0f,   // 右上角
+    0.5f, -0.5f, 0.0f,  // 右下角
+    -0.5f, -0.5f, 0.0f, // 左下角
+    -0.5f, 0.5f, 0.0f   // 左上角
+};
+
+unsigned int indices[] = {
+    // 注意索引从0开始!
+    // 此例的索引(0,1,2,3)就是顶点数组vertices的下标，
+    // 这样可以由下标代表顶点组合成矩形
+
+    0, 1, 3, // 第一个三角形
+    1, 2, 3  // 第二个三角形
 };
 
 void checkError(unsigned int target, unsigned int status) {
@@ -101,10 +111,14 @@ int main(int argc, char *argv[]) {
     glDeleteShader(fragmentShader);
 
     // 创建VAO/VBO
-    unsigned int VBO;
     unsigned int VAO;
     glGenVertexArrays(1, &VAO);
+
+    unsigned int VBO;
     glGenBuffers(1, &VBO);
+
+    unsigned int EBO;
+    glGenBuffers(1, &EBO);
 
     {
         //相当于分配两组内存，VAO保存指针，可以简单获取每个顶点的指针，VBO是顶点的指针的具体位置==，
@@ -116,6 +130,10 @@ int main(int argc, char *argv[]) {
             //把顶点数组复制到缓冲中供OpenGL使用
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
             glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+            //把index数组复制到缓冲中
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
             // 3. 设置顶点属性指针
             // location=0 ==> 0
@@ -146,7 +164,8 @@ int main(int argc, char *argv[]) {
 
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
 
 
         glfwSwapBuffers(window);
