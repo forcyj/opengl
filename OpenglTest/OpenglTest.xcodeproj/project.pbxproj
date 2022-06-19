@@ -17,6 +17,7 @@
 		2177672E278726840055EB2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2177672D278726840055EB2B /* main.cpp */; };
 		2177673027872F470055EB2B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2177672F27872F470055EB2B /* Cocoa.framework */; };
 		2177673227872F670055EB2B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2177673127872F670055EB2B /* CoreVideo.framework */; };
+		2197CB82285F8A6F00166975 /* OpenglTest in Resources */ = {isa = PBXBuildFile; fileRef = 2197CB81285F8A6F00166975 /* OpenglTest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		2177672D278726840055EB2B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2177672F27872F470055EB2B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2177673127872F670055EB2B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		2197CB81285F8A6F00166975 /* OpenglTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenglTest; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		217766F227871A310055EB2B /* OpenglTest */ = {
 			isa = PBXGroup;
 			children = (
+				2197CB81285F8A6F00166975 /* OpenglTest */,
 				2177672B278726540055EB2B /* glad.c */,
 				2177672D278726840055EB2B /* main.cpp */,
 				217766F927871A320055EB2B /* Assets.xcassets */,
@@ -248,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				217766FA27871A320055EB2B /* Assets.xcassets in Resources */,
+				2197CB82285F8A6F00166975 /* OpenglTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
