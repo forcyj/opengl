@@ -14,6 +14,7 @@
 #include <iostream>
 #include <cmath>
 #include "Shader.hpp"
+#include "Texture.hpp"
 
 //void myDisplay(void) {
 //    glClear(GL_COLOR_BUFFER_BIT);
@@ -25,10 +26,11 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 float vertices[] = {
-    // 位置              // 颜色
-     0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // 右下
-    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // 左下
-     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // 顶部
+//     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
+     0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
+     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
+    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
+    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 左上
 };
 
 unsigned int indices[] = {
@@ -86,8 +88,8 @@ int main(int argc, char *argv[]) {
     unsigned int VBO;
     glGenBuffers(1, &VBO);
 
-//    unsigned int EBO;
-//    glGenBuffers(1, &EBO);
+    unsigned int EBO;
+    glGenBuffers(1, &EBO);
 
     {
         //相当于分配两组内存，VAO保存指针，可以简单获取每个顶点的指针，VBO是顶点的指针的具体位置==，
@@ -100,20 +102,23 @@ int main(int argc, char *argv[]) {
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
             glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-//            //把index数组复制到缓冲中
-//            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-//            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+            //把index数组复制到缓冲中
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
             // 3. 设置顶点属性指针
             // location=0 ==> 0
             //GL_FALSE => true 则所有的数据都会被映射到0和1之间
             // stride： 第二个顶点开始的地方和第一个顶点开始的地方==
             // offset：顶点开始的位移
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
 
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
+            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3* sizeof(float)));
             glEnableVertexAttribArray(1);
+            
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+            glEnableVertexAttribArray(2);
 
             // 解除绑定GL_ARRAY_BUFFER，VBO
             glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -123,6 +128,9 @@ int main(int argc, char *argv[]) {
         glBindVertexArray(0);
     }
 
+    
+    Texture texture("container.jpeg");
+    
 
 //    int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
 
@@ -143,9 +151,13 @@ int main(int argc, char *argv[]) {
 //        float timeValue = glfwGetTime();
 //        float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
 //        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-
+        
+        glBindTexture(GL_TEXTURE_2D, texture.ID);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+//        glBindVertexArray(VAO);
+//        glDrawArrays(GL_TRIANGLES, 0, 3);
 //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 

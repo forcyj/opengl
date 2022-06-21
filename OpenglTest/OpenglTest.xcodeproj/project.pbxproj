@@ -20,6 +20,8 @@
 		2197CB85285F8B2800166975 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2197CB83285F8B2800166975 /* Shader.cpp */; };
 		2197CB87285F8C9300166975 /* vertex.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 2197CB86285F8C9300166975 /* vertex.glsl */; };
 		2197CB89285F8CFF00166975 /* fragment.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 2197CB88285F8CFF00166975 /* fragment.glsl */; };
+		21EC9D8428621FE400C2B790 /* container.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 21EC9D8328621FE400C2B790 /* container.jpeg */; };
+		21EC9D882862251100C2B790 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21EC9D862862251100C2B790 /* Texture.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,10 @@
 		2197CB84285F8B2800166975 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		2197CB86285F8C9300166975 /* vertex.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vertex.glsl; sourceTree = "<group>"; };
 		2197CB88285F8CFF00166975 /* fragment.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fragment.glsl; sourceTree = "<group>"; };
+		21EC9D7F28621E9E00C2B790 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		21EC9D8328621FE400C2B790 /* container.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = container.jpeg; path = OpenglTest/container.jpeg; sourceTree = SOURCE_ROOT; };
+		21EC9D862862251100C2B790 /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
+		21EC9D872862251100C2B790 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +120,8 @@
 		217766F227871A310055EB2B /* OpenglTest */ = {
 			isa = PBXGroup;
 			children = (
+				21EC9D8528621FFC00C2B790 /* glsl */,
+				21EC9D8228621FAE00C2B790 /* imgs */,
 				2177672B278726540055EB2B /* glad.c */,
 				2177672D278726840055EB2B /* main.cpp */,
 				2197CB83285F8B2800166975 /* Shader.cpp */,
@@ -122,6 +130,9 @@
 				2177670027871A320055EB2B /* OpenglTest.entitlements */,
 				2197CB86285F8C9300166975 /* vertex.glsl */,
 				2197CB88285F8CFF00166975 /* fragment.glsl */,
+				21EC9D7F28621E9E00C2B790 /* stb_image.h */,
+				21EC9D862862251100C2B790 /* Texture.cpp */,
+				21EC9D872862251100C2B790 /* Texture.hpp */,
 			);
 			path = OpenglTest;
 			sourceTree = "<group>";
@@ -153,6 +164,21 @@
 				2177672327871A9D0055EB2B /* OpenGL.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		21EC9D8228621FAE00C2B790 /* imgs */ = {
+			isa = PBXGroup;
+			children = (
+				21EC9D8328621FE400C2B790 /* container.jpeg */,
+			);
+			path = imgs;
+			sourceTree = "<group>";
+		};
+		21EC9D8528621FFC00C2B790 /* glsl */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = glsl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				217766FA27871A320055EB2B /* Assets.xcassets in Resources */,
+				21EC9D8428621FE400C2B790 /* container.jpeg in Resources */,
 				2197CB87285F8C9300166975 /* vertex.glsl in Resources */,
 				2197CB89285F8CFF00166975 /* fragment.glsl in Resources */,
 			);
@@ -285,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21EC9D882862251100C2B790 /* Texture.cpp in Sources */,
 				2177672E278726840055EB2B /* main.cpp in Sources */,
 				2197CB85285F8B2800166975 /* Shader.cpp in Sources */,
 				2177672C278726540055EB2B /* glad.c in Sources */,
