@@ -81,6 +81,11 @@ int main(int argc, char *argv[]) {
     Shader shader("vertex.glsl", "fragment.glsl");
 
     shader.use();
+//    glUniform1i(glGetUniformLocation(shader.ID, "texture1"), 0);
+    //glUniform1i设置每个采样器的方式告诉OpenGL每个着色器采样器属于哪个纹理单元
+    shader.setInt("texture1", 0);
+    shader.setInt("texture2", 1);
+    
     // 创建VAO/VBO
     unsigned int VAO;
     glGenVertexArrays(1, &VAO);
@@ -129,7 +134,8 @@ int main(int argc, char *argv[]) {
     }
 
     
-    Texture texture("container.jpeg");
+    Texture container("container.jpeg", GL_RGB);
+    Texture awesomeface("awesomeface.png", GL_RGBA);
     
 
 //    int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
@@ -152,7 +158,12 @@ int main(int argc, char *argv[]) {
 //        float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
 //        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
         
-        glBindTexture(GL_TEXTURE_2D, texture.ID);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, container.ID);
+        
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, awesomeface.ID);
+        
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

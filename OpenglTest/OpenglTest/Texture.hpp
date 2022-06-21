@@ -14,7 +14,7 @@ class Texture {
 public:
     // 程序ID
     unsigned int ID;
-    Texture(const char* path);
+    Texture(const char* path, unsigned int format);
 };
 
 #endif /* Texture_hpp */
