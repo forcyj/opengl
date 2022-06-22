@@ -24,6 +24,7 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
+float mixValue = 0.0f;
 
 float vertices[] = {
 //     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
@@ -164,8 +165,11 @@ int main(int argc, char *argv[]) {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, awesomeface.ID);
         
+        shader.setFloat("mixValue", mixValue);
+        
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
 
 //        glBindVertexArray(VAO);
 //        glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -195,6 +199,19 @@ void processInput(GLFWwindow *window)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+      {
+          mixValue += 0.01f; // change this value accordingly (might be too slow or too fast based on system hardware)
+          if(mixValue >= 1.0f)
+              mixValue = 1.0f;
+      }
+      if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+      {
+          mixValue -= 0.01f; // change this value accordingly (might be too slow or too fast based on system hardware)
+          if (mixValue <= 0.0f)
+              mixValue = 0.0f;
+      }
+    
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
