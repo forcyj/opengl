@@ -16,6 +16,10 @@
 #include "Shader.hpp"
 #include "Texture.hpp"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 //void myDisplay(void) {
 //    glClear(GL_COLOR_BUFFER_BIT);
 //    glRectf(-0.5f, -0.5f, 0.5f, 0.5f);
@@ -24,7 +28,7 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
-float mixValue = 0.0f;
+float mixValue = 1.0f;
 
 float vertices[] = {
 //     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
@@ -56,6 +60,17 @@ void checkError(unsigned int target, unsigned int status) {
 
 
 int main(int argc, char *argv[]) {
+    
+//    glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+//    // 译注：下面就是矩阵初始化的一个例子，如果使用的是0.9.9及以上版本
+//    // 下面这行代码就需要改为:
+//    // glm::mat4 trans = glm::mat4(1.0f)
+//    // 之后将不再进行提示
+//    glm::mat4 trans;
+//    trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+//    vec = trans * vec;
+//    std::cout << vec.x << vec.y << vec.z << std::endl;
+    
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -141,6 +156,13 @@ int main(int argc, char *argv[]) {
 
 //    int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
 
+    unsigned int transformLoc = glGetUniformLocation(shader.ID, "transform");
+    {
+        glm::mat4 trans;
+        trans = glm::rotate(trans, glm::radians(45.0f), glm::vec3(0.0, 0.0, 1.0));
+        trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+    }
 
     while(!glfwWindowShouldClose(window))
     {
@@ -166,6 +188,13 @@ int main(int argc, char *argv[]) {
         glBindTexture(GL_TEXTURE_2D, awesomeface.ID);
         
         shader.setFloat("mixValue", mixValue);
+        
+        glm::mat4 trans;
+        //建议的操作顺序是：1.缩放，2.旋转，3.位移，而采用算法，则按过来
+        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f)); //位移
+        trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));//2.旋转
+        trans = glm::scale(trans, glm::vec3(0.5f, 1.0f, 0.3f));//2.旋转
+        shader.setMatrix(transformLoc, trans);
         
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
