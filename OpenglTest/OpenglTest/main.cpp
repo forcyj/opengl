@@ -82,6 +82,19 @@ float vertices[] = {
     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 
+glm::vec3 cubePositions[] = {
+  glm::vec3( 0.0f,  0.0f,  0.0f),
+  glm::vec3( 2.0f,  5.0f, -15.0f),
+  glm::vec3(-1.5f, -2.2f, -2.5f),
+  glm::vec3(-3.8f, -2.0f, -12.3f),
+  glm::vec3( 2.4f, -0.4f, -3.5f),
+  glm::vec3(-1.7f,  3.0f, -7.5f),
+  glm::vec3( 1.3f, -2.0f, -2.5f),
+  glm::vec3( 1.5f,  2.0f, -2.5f),
+  glm::vec3( 1.5f,  0.2f, -1.5f),
+  glm::vec3(-1.3f,  1.0f, -1.5f)
+};
+
 unsigned int indices[] = {
     // 注意索引从0开始!
     // 此例的索引(0,1,2,3)就是顶点数组vertices的下标，
@@ -249,11 +262,10 @@ int main(int argc, char *argv[]) {
         glBindTexture(GL_TEXTURE_2D, awesomeface.ID);
         
         shader.setFloat("mixValue", mixValue);
-        glm::mat4 model;
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        shader.setMatrix("model", model);
-        shader.setMatrix("view", view);
-        shader.setMatrix("projection", projection);
+//        glm::mat4 model;
+//        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+//        shader.setMatrix("model", model);
+        
         
 //        glm::mat4 trans;
 //        //建议的操作顺序是：1.缩放，2.旋转，3.位移，而采用算法，则按过来
@@ -263,8 +275,22 @@ int main(int argc, char *argv[]) {
 //        shader.setMatrix(transformLoc, trans);
         
         glBindVertexArray(VAO);
+        
+        shader.setMatrix("view", view);
+        shader.setMatrix("projection", projection);
+        float currentTime = glfwGetTime();
+        
+        for (unsigned int i = 0; i < 10; i++) {
+            glm::mat4 model;
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 20.0f * (i + 1);
+            model = glm::rotate(model, currentTime * glm::radians(angle) , glm::vec3(1.0f, 0.3f, 0.5f));
+            shader.setMatrix("model", model);
+            
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // 针对GL_ELEMENT_ARRAY_BUFFER
-        glDrawArrays(GL_TRIANGLES, 0, 36); // 针对非GL_ELEMENT_ARRAY_BUFFER
+//        glDrawArrays(GL_TRIANGLES, 0, 36); // 针对非GL_ELEMENT_ARRAY_BUFFER
         
 
 //        glBindVertexArray(VAO);
@@ -276,6 +302,8 @@ int main(int argc, char *argv[]) {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
 
     glfwTerminate();
     return 0;
