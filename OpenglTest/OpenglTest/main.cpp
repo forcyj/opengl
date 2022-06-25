@@ -95,6 +95,12 @@ glm::vec3 cubePositions[] = {
   glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
+glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+bool keys[1024];
+GLfloat deltaTime = 0.0f;   // 当前帧遇上一帧的时间差
+GLfloat lastFrame = 0.0f;   // 上一帧的时间
 
 
 unsigned int indices[] = {
@@ -105,6 +111,9 @@ unsigned int indices[] = {
     0, 1, 3, // 第一个三角形
     1, 2, 3  // 第二个三角形
 };
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void do_movement();
 
 void checkError(unsigned int target, unsigned int status) {
     int  success;
@@ -147,6 +156,7 @@ int main(int argc, char *argv[]) {
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -237,14 +247,15 @@ int main(int argc, char *argv[]) {
     glm::mat4 projection;
     projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);//透视矩阵
 
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+//    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+//    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+//    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+//
+//    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+//    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+//
+//    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 
-    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-
-    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 
 
 
@@ -254,7 +265,11 @@ int main(int argc, char *argv[]) {
     {
         // input
         // -----
-        processInput(window);
+        glfwPollEvents();
+        GLfloat currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+        do_movement();
 
         // render
         // ------
@@ -291,25 +306,21 @@ int main(int argc, char *argv[]) {
         
 
         shader.setMatrix("projection", projection);
-        float currentTime = glfwGetTime();
+
+        glm::mat4 view;
+        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
+        shader.setMatrix("view", view);
         
         for (unsigned int i = 0; i < 10; i++) {
             glm::mat4 model;
             model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * (i + 1);
-            model = glm::rotate(model, currentTime * glm::radians(angle) , glm::vec3(1.0f, 0.3f, 0.5f));
+            float angle = 20.0f * i;
+            model = glm::rotate(model, glm::radians(angle) , glm::vec3(1.0f, 0.3f, 0.5f));
             shader.setMatrix("model", model);
             
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-
-        GLfloat radius = 10.0f;
-        GLfloat camX = sin(currentTime) * radius;
-        GLfloat camZ = cos(currentTime) * radius;
-        glm::mat4 view;
-        view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-
-        shader.setMatrix("view", view);
 
 //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // 针对GL_ELEMENT_ARRAY_BUFFER
 //        glDrawArrays(GL_TRIANGLES, 0, 36); // 针对非GL_ELEMENT_ARRAY_BUFFER
@@ -338,6 +349,32 @@ int main(int argc, char *argv[]) {
 //    return 0;
 }
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+    if (key >= 0 && key < 1024)
+    {
+        if (action == GLFW_PRESS)
+            keys[key] = true;
+        else if (action == GLFW_RELEASE)
+            keys[key] = false;
+    }
+}
+
+void do_movement()
+{
+    // Camera controls
+    GLfloat cameraSpeed = 0.5f * deltaTime;
+    if (keys[GLFW_KEY_W])
+        cameraPos += cameraSpeed * cameraFront;
+    if (keys[GLFW_KEY_S])
+        cameraPos -= cameraSpeed * cameraFront;
+    if (keys[GLFW_KEY_A])
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (keys[GLFW_KEY_D])
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+}
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
