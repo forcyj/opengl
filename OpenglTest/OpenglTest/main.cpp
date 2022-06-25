@@ -95,6 +95,8 @@ glm::vec3 cubePositions[] = {
   glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
+
+
 unsigned int indices[] = {
     // 注意索引从0开始!
     // 此例的索引(0,1,2,3)就是顶点数组vertices的下标，
@@ -234,7 +236,18 @@ int main(int argc, char *argv[]) {
     
     glm::mat4 projection;
     projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);//透视矩阵
-    
+
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+
+    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+
+    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+
+
+
     glEnable(GL_DEPTH_TEST);
 
     while(!glfwWindowShouldClose(window))
@@ -276,7 +289,7 @@ int main(int argc, char *argv[]) {
         
         glBindVertexArray(VAO);
         
-        shader.setMatrix("view", view);
+
         shader.setMatrix("projection", projection);
         float currentTime = glfwGetTime();
         
@@ -289,6 +302,15 @@ int main(int argc, char *argv[]) {
             
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+
+        GLfloat radius = 10.0f;
+        GLfloat camX = sin(currentTime) * radius;
+        GLfloat camZ = cos(currentTime) * radius;
+        glm::mat4 view;
+        view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+
+        shader.setMatrix("view", view);
+
 //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // 针对GL_ELEMENT_ARRAY_BUFFER
 //        glDrawArrays(GL_TRIANGLES, 0, 36); // 针对非GL_ELEMENT_ARRAY_BUFFER
         
