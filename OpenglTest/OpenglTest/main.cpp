@@ -29,8 +29,8 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 float mixValue = 1.0f;
-unsigned int screenWidth = 800;
-unsigned int screenHeight = 600;
+unsigned int WIDTH = 800;
+unsigned int HEIGHT = 600;
 
 //float vertices[] = {
 ////     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
@@ -105,8 +105,10 @@ GLfloat deltaTime = 0.0f;   // 当前帧遇上一帧的时间差
 GLfloat lastFrame = 0.0f;   // 上一帧的时间
 GLfloat yaw   = -90.0f;    // Yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right (due to how Eular angles work) so we initially rotate a bit to the left.
 GLfloat pitch =   0.0f;
-GLfloat lastX =  screenWidth  / 2.0;
-GLfloat lastY =  screenHeight / 2.0;
+GLfloat lastX =  WIDTH  / 2.0;
+GLfloat lastY =  HEIGHT / 2.0;
+float aspect = 45.0f;
+
 
 unsigned int indices[] = {
     // 注意索引从0开始!
@@ -120,6 +122,7 @@ unsigned int indices[] = {
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void do_movement();
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 void checkError(unsigned int target, unsigned int status) {
     int  success;
@@ -152,7 +155,7 @@ int main(int argc, char *argv[]) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 
-    GLFWwindow* window = glfwCreateWindow(screenWidth, screenHeight, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
 //        std::cout << "Failed to create GLFW window" << std::endl;
@@ -163,6 +166,7 @@ int main(int argc, char *argv[]) {
     glfwSetKeyCallback(window, key_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -251,7 +255,7 @@ int main(int argc, char *argv[]) {
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f)); //观察矩阵
     
     glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);//透视矩阵
+    projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);//透视矩阵
 
 //    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 //    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -311,6 +315,7 @@ int main(int argc, char *argv[]) {
         glBindVertexArray(VAO);
         
 
+        projection = glm::perspective(aspect, (GLfloat)WIDTH/(GLfloat)HEIGHT, 0.1f, 100.0f);
         shader.setMatrix("projection", projection);
 
         glm::mat4 view;
@@ -415,6 +420,16 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     front.y = sin(glm::radians(pitch));
     front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
     cameraFront = glm::normalize(front);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+  if(aspect >= 1.0f && aspect <= 45.0f)
+    aspect -= yoffset;
+  if(aspect <= 1.0f)
+    aspect = 1.0f;
+  if(aspect >= 45.0f)
+    aspect = 45.0f;
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
