@@ -62,6 +62,7 @@
 		2197CB84285F8B2800166975 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		2197CB86285F8C9300166975 /* vertex.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vertex.glsl; sourceTree = "<group>"; };
 		2197CB88285F8CFF00166975 /* fragment.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fragment.glsl; sourceTree = "<group>"; };
+		21B677AA2868BD0F00311735 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		21EC9D7F28621E9E00C2B790 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		21EC9D8328621FE400C2B790 /* container.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = container.jpeg; path = OpenglTest/container.jpeg; sourceTree = SOURCE_ROOT; };
 		21EC9D862862251100C2B790 /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
@@ -135,6 +136,7 @@
 				21EC9D7F28621E9E00C2B790 /* stb_image.h */,
 				21EC9D862862251100C2B790 /* Texture.cpp */,
 				21EC9D872862251100C2B790 /* Texture.hpp */,
+				21B677AA2868BD0F00311735 /* Camera.h */,
 			);
 			path = OpenglTest;
 			sourceTree = "<group>";

@@ -15,10 +15,12 @@
 #include <cmath>
 #include "Shader.hpp"
 #include "Texture.hpp"
+#include "Camera.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 
 //void myDisplay(void) {
 //    glClear(GL_COLOR_BUFFER_BIT);
@@ -28,7 +30,7 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
-float mixValue = 1.0f;
+float mixValue = 0.2f;
 unsigned int WIDTH = 800;
 unsigned int HEIGHT = 600;
 
@@ -103,12 +105,10 @@ glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 bool keys[1024];
 GLfloat deltaTime = 0.0f;   // 当前帧遇上一帧的时间差
 GLfloat lastFrame = 0.0f;   // 上一帧的时间
-GLfloat yaw   = -90.0f;    // Yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right (due to how Eular angles work) so we initially rotate a bit to the left.
-GLfloat pitch =   0.0f;
 GLfloat lastX =  WIDTH  / 2.0;
 GLfloat lastY =  HEIGHT / 2.0;
-float aspect = 45.0f;
 
+Camera camera(cameraPos);
 
 unsigned int indices[] = {
     // 注意索引从0开始!
@@ -234,40 +234,6 @@ int main(int argc, char *argv[]) {
     
     Texture container("container.jpeg", GL_RGB);
     Texture awesomeface("awesomeface.png", GL_RGBA);
-    
-
-//    int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-
-//    unsigned int transformLoc = glGetUniformLocation(shader.ID, "transform");
-//    {
-//        glm::mat4 trans;
-//        trans = glm::rotate(trans, glm::radians(45.0f), glm::vec3(0.0, 0.0, 1.0));
-//        trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
-//        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
-//    }
-//    
-//    glm::mat4 model;
-//    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f)); //模型矩阵
-//    model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-    
-    glm::mat4 view;
-    // 注意，我们将矩阵向我们要进行移动场景的反方向移动。
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f)); //观察矩阵
-    
-    glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);//透视矩阵
-
-//    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-//    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-//    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-//
-//    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-//    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-//
-//    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-
-
-
 
     glEnable(GL_DEPTH_TEST);
 
@@ -315,12 +281,12 @@ int main(int argc, char *argv[]) {
         glBindVertexArray(VAO);
         
 
-        projection = glm::perspective(aspect, (GLfloat)WIDTH/(GLfloat)HEIGHT, 0.1f, 100.0f);
+        glm::mat4 projection;
+        projection = glm::perspective(camera.Zoom, (GLfloat)WIDTH/(GLfloat)HEIGHT, 0.1f, 100.0f);
         shader.setMatrix("projection", projection);
 
         glm::mat4 view;
-        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
+        view = camera.GetViewMatrix();
         shader.setMatrix("view", view);
         
         for (unsigned int i = 0; i < 10; i++) {
@@ -376,15 +342,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void do_movement()
 {
     // Camera controls
-    GLfloat cameraSpeed = 0.5f * deltaTime;
-    if (keys[GLFW_KEY_W])
-        cameraPos += cameraSpeed * cameraFront;
-    if (keys[GLFW_KEY_S])
-        cameraPos -= cameraSpeed * cameraFront;
-    if (keys[GLFW_KEY_A])
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (keys[GLFW_KEY_D])
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+       if(keys[GLFW_KEY_W])
+           camera.ProcessKeyboard(FORWARD, deltaTime);
+       if(keys[GLFW_KEY_S])
+           camera.ProcessKeyboard(BACKWARD, deltaTime);
+       if(keys[GLFW_KEY_A])
+           camera.ProcessKeyboard(LEFT, deltaTime);
+       if(keys[GLFW_KEY_D])
+           camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
 bool firstMouse = true;
@@ -403,33 +368,12 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    GLfloat sensitivity = 0.05;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
-
-    yaw   += xoffset;
-    pitch += yoffset;
-
-    if(pitch > 89.0f)
-        pitch = 89.0f;
-    if(pitch < -89.0f)
-        pitch = -89.0f;
-
-    glm::vec3 front;
-    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front.y = sin(glm::radians(pitch));
-    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraFront = glm::normalize(front);
+    camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-  if(aspect >= 1.0f && aspect <= 45.0f)
-    aspect -= yoffset;
-  if(aspect <= 1.0f)
-    aspect = 1.0f;
-  if(aspect >= 45.0f)
-    aspect = 45.0f;
+    camera.ProcessMouseScroll(yoffset);
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
