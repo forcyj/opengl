@@ -108,6 +108,9 @@ GLfloat lastFrame = 0.0f;   // 上一帧的时间
 GLfloat lastX =  WIDTH  / 2.0;
 GLfloat lastY =  HEIGHT / 2.0;
 
+// lighting
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
 Camera camera(cameraPos);
 
 unsigned int indices[] = {
@@ -174,68 +177,45 @@ int main(int argc, char *argv[]) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+    
+    glEnable(GL_DEPTH_TEST);
 
     // preprare
     Shader shader("vertex.glsl", "fragment.glsl");
-
-    shader.use();
 //    glUniform1i(glGetUniformLocation(shader.ID, "texture1"), 0);
     //glUniform1i设置每个采样器的方式告诉OpenGL每个着色器采样器属于哪个纹理单元
     shader.setInt("texture1", 0);
     shader.setInt("texture2", 1);
     
     // 创建VAO/VBO
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-
     unsigned int VBO;
     glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
 
-//    unsigned int EBO;
-//    glGenBuffers(1, &EBO);
-
-    {
-        //相当于分配两组内存，VAO保存指针，可以简单获取每个顶点的指针，VBO是顶点的指针的具体位置==，
-        // 后续可以直接绑定VAO就可以访问VBO中的顶点位置了。
-        // 另外，后面也可以更新VBO来更新顶点位置===
-        // 绑定VAO
-        glBindVertexArray(VAO);
-        {
-            //把顶点数组复制到缓冲中供OpenGL使用
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-            //把index数组复制到缓冲中
-//            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-//            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-            // 3. 设置顶点属性指针
-            // location=0 ==> 0
-            //GL_FALSE => true 则所有的数据都会被映射到0和1之间
-            // stride： 第二个顶点开始的地方和第一个顶点开始的地方==
-            // offset：顶点开始的位移
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-            glEnableVertexAttribArray(0);
-
-//            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3* sizeof(float)));
-//            glEnableVertexAttribArray(1);
-            
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-            glEnableVertexAttribArray(1);
-
-            // 解除绑定GL_ARRAY_BUFFER，VBO
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-        }
-
-        //解除绑定VAO
-        glBindVertexArray(0);
-    }
+    unsigned int VAO;
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    glBindVertexArray(0);
+    
+    unsigned int lightVAO;
+    glGenVertexArrays(1, &lightVAO);
+    glBindVertexArray(lightVAO);
+    // 只需要绑定VBO不用再次设置VBO的数据，因为箱子的VBO数据中已经包含了正确的立方体顶点数据
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    glBindVertexArray(0);
+   
+    Shader lampShader("gl_light.glsl", "gl_light_f.glsl");
 
     
     Texture container("container.jpeg", GL_RGB);
     Texture awesomeface("awesomeface.png", GL_RGBA);
 
-    glEnable(GL_DEPTH_TEST);
 
     while(!glfwWindowShouldClose(window))
     {
@@ -252,20 +232,19 @@ int main(int argc, char *argv[]) {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 //        glClear(GL_COLOR_BUFFER_BIT);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        shader.use();
+    
 
 //        float timeValue = glfwGetTime();
 //        float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
 //        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
         
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, container.ID);
+//        glActiveTexture(GL_TEXTURE0);
+//        glBindTexture(GL_TEXTURE_2D, container.ID);
         
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, awesomeface.ID);
+//        glActiveTexture(GL_TEXTURE1);
+//        glBindTexture(GL_TEXTURE_2D, awesomeface.ID);
         
-        shader.setFloat("mixValue", mixValue);
+ 
 //        glm::mat4 model;
 //        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 //        shader.setMatrix("model", model);
@@ -278,26 +257,46 @@ int main(int argc, char *argv[]) {
 //        trans = glm::scale(trans, glm::vec3(0.5f, 1.0f, 0.3f));//2.旋转
 //        shader.setMatrix(transformLoc, trans);
         
-        glBindVertexArray(VAO);
-        
-
         glm::mat4 projection;
         projection = glm::perspective(camera.Zoom, (GLfloat)WIDTH/(GLfloat)HEIGHT, 0.1f, 100.0f);
-        shader.setMatrix("projection", projection);
-
         glm::mat4 view;
         view = camera.GetViewMatrix();
-        shader.setMatrix("view", view);
-        
-        for (unsigned int i = 0; i < 10; i++) {
-            glm::mat4 model;
-            model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle) , glm::vec3(1.0f, 0.3f, 0.5f));
-            shader.setMatrix("model", model);
+
+        {
+            shader.use();
             
+            shader.setFloat("mixValue", mixValue);
+            shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+            shader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
+           
+            shader.setMatrix("projection", projection);
+
+            shader.setMatrix("view", view);
+        
+            glm::mat4 model = glm::mat4(1.0f);
+            shader.setMatrix("model", model);
+            glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+        
+        {
+            lampShader.use();
+            lampShader.setMatrix("projection", projection);
+            lampShader.setMatrix("view", view);
+       
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::translate(model, lightPos);
+            model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+            lampShader.setMatrix("model", model);
+            glBindVertexArray(lightVAO);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+        
+        
+   
+        glBindVertexArray(0);
+        
+        
 
 //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // 针对GL_ELEMENT_ARRAY_BUFFER
 //        glDrawArrays(GL_TRIANGLES, 0, 36); // 针对非GL_ELEMENT_ARRAY_BUFFER
@@ -306,7 +305,7 @@ int main(int argc, char *argv[]) {
 //        glBindVertexArray(VAO);
 //        glDrawArrays(GL_TRIANGLES, 0, 3);
 //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
+       
 
 
         glfwSwapBuffers(window);

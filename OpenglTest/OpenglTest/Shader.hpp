@@ -32,6 +32,8 @@ public:
     void setFloat(const std::string &name, float value) const;
     void setMatrix(const std::string& name, glm::mat4& mat4) const;
     void setMatrix(unsigned int location, glm::mat4& mat4) const;
+    void setVec3(const std::string &name, const glm::vec3 &value) const;
+    void setVec3(const std::string& name, float x, float y, float z) const;
 };
 
 #endif
