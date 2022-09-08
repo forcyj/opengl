@@ -100,8 +100,8 @@ glm::vec3 cubePositions[] = {
 };
 
 glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+//glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+//glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 bool keys[1024];
 GLfloat deltaTime = 0.0f;   // 当前帧遇上一帧的时间差
 GLfloat lastFrame = 0.0f;   // 上一帧的时间
@@ -261,21 +261,19 @@ int main(int argc, char *argv[]) {
 //        trans = glm::scale(trans, glm::vec3(0.5f, 1.0f, 0.3f));//2.旋转
 //        shader.setMatrix(transformLoc, trans);
         
-        glm::mat4 projection;
-        projection = glm::perspective(glm::radians(camera.Zoom), (GLfloat)WIDTH/(GLfloat)HEIGHT, 0.1f, 100.0f);
-        glm::mat4 view;
-        view = camera.GetViewMatrix();
 
-        {
+ 
             shader.use();
             
             shader.setFloat("mixValue", mixValue);
             shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
             shader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
             shader.setVec3("lightPos", lightPos);
+            shader.setVec3("viewPos", camera.Position);
            
+            glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (GLfloat)WIDTH/(GLfloat)HEIGHT, 0.1f, 100.0f);
+            glm::mat4 view = camera.GetViewMatrix();
             shader.setMatrix("projection", projection);
-
             shader.setMatrix("view", view);
         
             glm::mat4 model = glm::mat4(1.0f);
@@ -283,20 +281,18 @@ int main(int argc, char *argv[]) {
            
             glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
-        
-        {
+  
             lampShader.use();
             lampShader.setMatrix("projection", projection);
             lampShader.setMatrix("view", view);
        
-            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::mat4(1.0f);
             model = glm::translate(model, lightPos);
             model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
             lampShader.setMatrix("model", model);
             glBindVertexArray(lightVAO);
             glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
+    
         
         
    
