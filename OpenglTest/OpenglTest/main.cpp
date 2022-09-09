@@ -270,6 +270,10 @@ int main(int argc, char *argv[]) {
             shader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
             shader.setVec3("lightPos", lightPos);
             shader.setVec3("viewPos", camera.Position);
+        shader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
+        shader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
+        shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        shader.setFloat("material.shininess", 32.0f);
            
             glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (GLfloat)WIDTH/(GLfloat)HEIGHT, 0.1f, 100.0f);
             glm::mat4 view = camera.GetViewMatrix();
