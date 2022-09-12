@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2100CD7C28CBA2C600D7DEC8 /* container2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2100CD7B28CBA2C600D7DEC8 /* container2.png */; };
+		2100CD7E28CF7A9100D7DEC8 /* container2_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */; };
 		217766FA27871A320055EB2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 217766F927871A320055EB2B /* Assets.xcassets */; };
 		2177670A27871A330055EB2B /* OpenglTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177670927871A330055EB2B /* OpenglTestTests.m */; };
 		2177671427871A330055EB2B /* OpenglTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177671327871A330055EB2B /* OpenglTestUITests.m */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		2100CD7B28CBA2C600D7DEC8 /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
+		2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2_specular.png; sourceTree = "<group>"; };
 		217766F027871A310055EB2B /* OpenglTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenglTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		217766F927871A320055EB2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2177670027871A320055EB2B /* OpenglTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenglTest.entitlements; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 		21EC9D8228621FAE00C2B790 /* imgs */ = {
 			isa = PBXGroup;
 			children = (
+				2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */,
 				2100CD7B28CBA2C600D7DEC8 /* container2.png */,
 				21EC9D892862329300C2B790 /* awesomeface.png */,
 				21EC9D8328621FE400C2B790 /* container.jpeg */,
@@ -306,6 +309,7 @@
 				21EC9D8E286A09FB00C2B790 /* gl_light_f.glsl in Resources */,
 				2100CD7C28CBA2C600D7DEC8 /* container2.png in Resources */,
 				2197CB89285F8CFF00166975 /* fragment.glsl in Resources */,
+				2100CD7E28CF7A9100D7DEC8 /* container2_specular.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

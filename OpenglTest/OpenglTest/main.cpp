@@ -187,9 +187,7 @@ int main(int argc, char *argv[]) {
     Shader shader("vertex.glsl", "fragment.glsl");
 //    glUniform1i(glGetUniformLocation(shader.ID, "texture1"), 0);
     //glUniform1i设置每个采样器的方式告诉OpenGL每个着色器采样器属于哪个纹理单元
-    shader.setInt("texture1", 0);
-    shader.setInt("texture2", 1);
-    shader.setInt("material.diffuse", 0);
+
     
     // 创建VAO/VBO
     unsigned int VBO;
@@ -227,6 +225,13 @@ int main(int argc, char *argv[]) {
     
     Texture container("container2.png", GL_RGBA);
     Texture awesomeface("awesomeface.png", GL_RGBA);
+    Texture container_specular("container2_specular.png", GL_RGBA);
+    
+    shader.use();
+    shader.setInt("texture1", 0);
+    shader.setInt("texture2", 1);
+    shader.setInt("material.diffuse", 0);
+    shader.setInt("material.specular", 1);
 
 
     while(!glfwWindowShouldClose(window))
@@ -245,31 +250,6 @@ int main(int argc, char *argv[]) {
 //        glClear(GL_COLOR_BUFFER_BIT);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-
-//        float timeValue = glfwGetTime();
-//        float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-//        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-        
-//        glActiveTexture(GL_TEXTURE0);
-//        glBindTexture(GL_TEXTURE_2D, container.ID);
-        
-//        glActiveTexture(GL_TEXTURE1);
-//        glBindTexture(GL_TEXTURE_2D, awesomeface.ID);
-        
- 
-//        glm::mat4 model;
-//        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-//        shader.setMatrix("model", model);
-        
-        
-//        glm::mat4 trans;
-//        //建议的操作顺序是：1.缩放，2.旋转，3.位移，而采用算法，则按过来
-//        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f)); //位移
-//        trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));//2.旋转
-//        trans = glm::scale(trans, glm::vec3(0.5f, 1.0f, 0.3f));//2.旋转
-//        shader.setMatrix(transformLoc, trans);
-        
-
  
             shader.use();
             shader.setVec3("light.position", lightPos);
@@ -278,16 +258,7 @@ int main(int argc, char *argv[]) {
         shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
         shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
         shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-            
-        
-//            shader.setFloat("mixValue", mixValue);
-//            shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-//            shader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
-//            shader.setVec3("lightPos", lightPos);
-//            shader.setVec3("viewPos", camera.Position);
-//        shader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
-//        shader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
-        shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+ 
         shader.setFloat("material.shininess", 64.0f);
         
       
@@ -303,6 +274,9 @@ int main(int argc, char *argv[]) {
         // bind diffuse map
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, container.ID);
+        
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, container_specular.ID);
            
             glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -318,21 +292,7 @@ int main(int argc, char *argv[]) {
             glBindVertexArray(lightVAO);
             glDrawArrays(GL_TRIANGLES, 0, 36);
     
-        
-        
-   
         glBindVertexArray(0);
-        
-        
-
-//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // 针对GL_ELEMENT_ARRAY_BUFFER
-//        glDrawArrays(GL_TRIANGLES, 0, 36); // 针对非GL_ELEMENT_ARRAY_BUFFER
-        
-
-//        glBindVertexArray(VAO);
-//        glDrawArrays(GL_TRIANGLES, 0, 3);
-//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-       
 
 
         glfwSwapBuffers(window);
