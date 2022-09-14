@@ -255,6 +255,7 @@ int main(int argc, char *argv[]) {
             shader.setVec3("light.position", lightPos);
             shader.setVec3("viewPos", camera.Position);
         // light properties
+        shader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
         shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
         shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
         shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
@@ -268,8 +269,9 @@ int main(int argc, char *argv[]) {
             shader.setMatrix("projection", projection);
             shader.setMatrix("view", view);
         
-            glm::mat4 model = glm::mat4(1.0f);
-            shader.setMatrix("model", model);
+           
+        glm::mat4 model = glm::mat4(1.0f);
+        shader.setMatrix("model", model);
         
         // bind diffuse map
         glActiveTexture(GL_TEXTURE0);
@@ -277,13 +279,26 @@ int main(int argc, char *argv[]) {
         
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, container_specular.ID);
-           
-            glBindVertexArray(VAO);
+        
+        glBindVertexArray(VAO);
+        for(unsigned int i = 0; i < 10; i++)
+        {
+            
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 20.0f * i;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            shader.setMatrix("model", model);
+
             glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+        
+//            glBindVertexArray(VAO);
+//            glDrawArrays(GL_TRIANGLES, 0, 36);
   
             lampShader.use();
             lampShader.setMatrix("projection", projection);
             lampShader.setMatrix("view", view);
+        
        
             model = glm::mat4(1.0f);
             model = glm::translate(model, lightPos);
