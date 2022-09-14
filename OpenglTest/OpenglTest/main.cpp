@@ -252,16 +252,20 @@ int main(int argc, char *argv[]) {
     
  
             shader.use();
-            shader.setVec3("light.position", lightPos);
+//            shader.setVec3("light.position", lightPos);
             shader.setVec3("viewPos", camera.Position);
         // light properties
-        shader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
+//        shader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
         shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
         shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
         shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
         shader.setFloat("light.constant",  1.0f);
         shader.setFloat("light.linear",    0.09f);
         shader.setFloat("light.quadratic", 0.032f);
+        
+        shader.setVec3("light.position",  camera.Position);
+        shader.setVec3("light.direction", camera.Front);
+        shader.setFloat("light.cutOff",   glm::cos(glm::radians(12.5f)));
         
         shader.setFloat("material.shininess", 64.0f);
         

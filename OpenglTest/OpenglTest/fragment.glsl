@@ -9,7 +9,8 @@ struct Material {
 
 struct Light {
     vec3 position;
-//    vec3 direction;
+    vec3 direction;
+    float cutOff;
 
     vec3 ambient;
     vec3 diffuse;
@@ -31,6 +32,7 @@ uniform Light light;
 
 void main()
 {
+      // 执行光照计算
     // 环境光
 //    vec3 ambient = light.ambient * material.ambient;
     vec3 ambient = light.ambient * texture(material.diffuse, TexCoords).rgb;
@@ -38,6 +40,10 @@ void main()
     // 漫反射
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(light.position - FragPos);
+    float theta = dot(lightDir, normalize(-light.direction));
+
+    if(theta > light.cutOff)
+    {
     float diff = max(dot(norm, lightDir), 0.0);
 //    vec3 diffuse = light.diffuse * diff * material.diffuse;
     vec3 diffuse = light.diffuse * diff * texture(material.diffuse, TexCoords).rgb;
@@ -56,5 +62,8 @@ void main()
     specular *= attenuation;
     
     vec3 result = (ambient + diffuse + specular);
-    FragColor = vec4(result, 1.0);
+        FragColor = vec4(result, 1.0);
+    } else { // 否则，使用环境光，让场景在聚光之外时不至于完全黑暗
+        FragColor = vec4(light.ambient * vec3(texture(material.diffuse, TexCoords)), 1.0);
+    }
 }
