@@ -12,6 +12,8 @@
 using std::vector;
 using std::string;
 
+namespace Assimp {
+
 Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
 {
     this->vertices = vertices;
@@ -102,3 +104,4 @@ void Mesh::Draw(const Shader& shader)
     glActiveTexture(GL_TEXTURE0);
 }
 
+}

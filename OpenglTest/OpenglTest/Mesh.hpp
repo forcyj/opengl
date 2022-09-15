@@ -17,6 +17,8 @@
 
 #include "Shader.hpp"
 
+namespace Assimp {
+
 #define MAX_BONE_INFLUENCE 4
 
 struct Vertex {
@@ -39,6 +41,7 @@ struct Vertex {
 struct Texture {
     unsigned int id;
     std::string type;
+    std::string path;
 };
 
 class Mesh {
@@ -57,5 +60,8 @@ private:
     /*  函数  */
     void setupMesh();
 };
+
+
+}
 
 #endif /* Mesh_hpp */

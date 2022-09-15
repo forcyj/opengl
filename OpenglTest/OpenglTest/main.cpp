@@ -21,6 +21,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Model.h"
+#include "utils/filesystem.h"
+
 
 //void myDisplay(void) {
 //    glClear(GL_COLOR_BUFFER_BIT);
@@ -33,8 +36,8 @@ void processInput(GLFWwindow *window);
 unsigned int loadTexture(const char *path);
 
 float mixValue = 0.2f;
-unsigned int WIDTH = 800;
-unsigned int HEIGHT = 600;
+unsigned int SCR_WIDTH = 800;
+unsigned int SCR_HEIGHT = 600;
 
 //float vertices[] = {
 ////     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
@@ -115,8 +118,8 @@ glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
 bool keys[1024];
 GLfloat deltaTime = 0.0f;   // 当前帧遇上一帧的时间差
 GLfloat lastFrame = 0.0f;   // 上一帧的时间
-GLfloat lastX =  WIDTH  / 2.0;
-GLfloat lastY =  HEIGHT / 2.0;
+GLfloat lastX =  SCR_WIDTH  / 2.0;
+GLfloat lastY =  SCR_HEIGHT / 2.0;
 
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
@@ -168,7 +171,7 @@ int main(int argc, char *argv[]) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
 //        std::cout << "Failed to create GLFW window" << std::endl;
@@ -189,56 +192,10 @@ int main(int argc, char *argv[]) {
     }
     
     glEnable(GL_DEPTH_TEST);
-
-    // preprare
-    Shader shader("vertex.glsl", "fragment.glsl");
-//    glUniform1i(glGetUniformLocation(shader.ID, "texture1"), 0);
-    //glUniform1i设置每个采样器的方式告诉OpenGL每个着色器采样器属于哪个纹理单元
-
     
-    // 创建VAO/VBO
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    Shader ourShader("1.model_loading.vs", "1.model_loading.fs");
     
-
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-    
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3*sizeof(float)));
-    glEnableVertexAttribArray(1);
-    
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6*sizeof(float)));
-    glEnableVertexAttribArray(2);
-    
-    glBindVertexArray(0);
-    
-    unsigned int lightVAO;
-    glGenVertexArrays(1, &lightVAO);
-    glBindVertexArray(lightVAO);
-    // 只需要绑定VBO不用再次设置VBO的数据，因为箱子的VBO数据中已经包含了正确的立方体顶点数据
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    glBindVertexArray(0);
-   
-    Shader lampShader("gl_light.glsl", "gl_light_f.glsl");
-
-    
-    Texture container("container2.png", GL_RGBA);
-    Texture awesomeface("awesomeface.png", GL_RGBA);
-    Texture container_specular("container2_specular.png", GL_RGBA);
-    
-    shader.use();
-    shader.setInt("texture1", 0);
-    shader.setInt("texture2", 1);
-    shader.setInt("material.diffuse", 0);
-    shader.setInt("material.specular", 1);
+    Assimp::Model ourModel(FileSystem::getPath("resources/objects/cyborg/cyborg.obj"));
 
 
     while(!glfwWindowShouldClose(window))
@@ -258,127 +215,27 @@ int main(int argc, char *argv[]) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
  
-            shader.use();
-//            shader.setVec3("light.position", lightPos);
-            shader.setVec3("viewPos", camera.Position);
-        shader.setFloat("material.shininess", 32.0f);
-        // light properties
-      /*
-        Here we set all the uniforms for the 5/6 types of lights we have. We have to set them manually and index
-        the proper PointLight struct in the array to set each uniform variable. This can be done more code-friendly
-        by defining light types as classes and set their values in there, or by using a more efficient uniform approach
-        by using 'Uniform buffer objects', but that is something we'll discuss in the 'Advanced GLSL' tutorial.
-     */
-     // directional light
-     shader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-     shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-     shader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-     shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
-     // point light 1
-     shader.setVec3("pointLights[0].position", pointLightPositions[0]);
-     shader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
-     shader.setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
-     shader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
-     shader.setFloat("pointLights[0].constant", 1.0f);
-     shader.setFloat("pointLights[0].linear", 0.09f);
-     shader.setFloat("pointLights[0].quadratic", 0.032f);
-     // point light 2
-     shader.setVec3("pointLights[1].position", pointLightPositions[1]);
-     shader.setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
-     shader.setVec3("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
-     shader.setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
-     shader.setFloat("pointLights[1].constant", 1.0f);
-     shader.setFloat("pointLights[1].linear", 0.09f);
-     shader.setFloat("pointLights[1].quadratic", 0.032f);
-     // point light 3
-     shader.setVec3("pointLights[2].position", pointLightPositions[2]);
-     shader.setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
-     shader.setVec3("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f);
-     shader.setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
-     shader.setFloat("pointLights[2].constant", 1.0f);
-     shader.setFloat("pointLights[2].linear", 0.09f);
-     shader.setFloat("pointLights[2].quadratic", 0.032f);
-     // point light 4
-     shader.setVec3("pointLights[3].position", pointLightPositions[3]);
-     shader.setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
-     shader.setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
-     shader.setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
-     shader.setFloat("pointLights[3].constant", 1.0f);
-     shader.setFloat("pointLights[3].linear", 0.09f);
-     shader.setFloat("pointLights[3].quadratic", 0.032f);
-     // spotLight
-     shader.setVec3("spotLight.position", camera.Position);
-     shader.setVec3("spotLight.direction", camera.Front);
-     shader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
-     shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
-     shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-     shader.setFloat("spotLight.constant", 1.0f);
-     shader.setFloat("spotLight.linear", 0.09f);
-     shader.setFloat("spotLight.quadratic", 0.032f);
-     shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-     shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
-      
-           
-            glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (GLfloat)WIDTH/(GLfloat)HEIGHT, 0.1f, 100.0f);
-            glm::mat4 view = camera.GetViewMatrix();
-            shader.setMatrix("projection", projection);
-            shader.setMatrix("view", view);
-        
-           
-        glm::mat4 model = glm::mat4(1.0f);
-        shader.setMatrix("model", model);
-        
-        // bind diffuse map
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, container.ID);
-        
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, container_specular.ID);
-        
-        glBindVertexArray(VAO);
-        for(unsigned int i = 0; i < 10; i++)
-        {
-            
-            model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            shader.setMatrix("model", model);
+        // don't forget to enable shader before setting uniforms
+                ourShader.use();
 
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
-        
-//            glBindVertexArray(VAO);
-//            glDrawArrays(GL_TRIANGLES, 0, 36);
-  
-            lampShader.use();
-            lampShader.setMatrix("projection", projection);
-            lampShader.setMatrix("view", view);
-        
-       
-            model = glm::mat4(1.0f);
-            model = glm::translate(model, lightPos);
-            model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
-            lampShader.setMatrix("model", model);
-            glBindVertexArray(lightVAO);
-        for (unsigned int i = 0; i < 4; i++)
-                 {
-                     model = glm::mat4(1.0f);
-                     model = glm::translate(model, pointLightPositions[i]);
-                     model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
-                     lampShader.setMatrix("model", model);
-                     glDrawArrays(GL_TRIANGLES, 0, 36);
-                 }
-        
-//            glDrawArrays(GL_TRIANGLES, 0, 36);
-    
-        glBindVertexArray(0);
+                // view/projection transformations
+                glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+                glm::mat4 view = camera.GetViewMatrix();
+                ourShader.setMat4("projection", projection);
+                ourShader.setMat4("view", view);
+
+                // render the loaded model
+                glm::mat4 model = glm::mat4(1.0f);
+                model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+                model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));    // it's a bit too big for our scene, so scale it down
+                ourShader.setMat4("model", model);
+                ourModel.Draw(ourShader);
 
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+
 
     glfwTerminate();
     return 0;
