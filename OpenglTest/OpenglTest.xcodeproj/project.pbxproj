@@ -103,6 +103,7 @@
 		219ED64728D4E60900D0D000 /* Antonio-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 219ED5BE28D4E60900D0D000 /* Antonio-Bold.ttf */; };
 		219ED64928D8C90300D0D000 /* depth_test.vs in Resources */ = {isa = PBXBuildFile; fileRef = 219ED64828D8C90300D0D000 /* depth_test.vs */; };
 		219ED64B28D8C93A00D0D000 /* depth_test.fs in Resources */ = {isa = PBXBuildFile; fileRef = 219ED64A28D8C93A00D0D000 /* depth_test.fs */; };
+		219ED64D28D8D17700D0D000 /* shaderSingleColor.fs in Resources */ = {isa = PBXBuildFile; fileRef = 219ED64C28D8D17700D0D000 /* shaderSingleColor.fs */; };
 		21EC9D8428621FE400C2B790 /* container.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 21EC9D8328621FE400C2B790 /* container.jpeg */; };
 		21EC9D882862251100C2B790 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21EC9D862862251100C2B790 /* Texture.cpp */; };
 		21EC9D8A2862329300C2B790 /* awesomeface.png in Resources */ = {isa = PBXBuildFile; fileRef = 21EC9D892862329300C2B790 /* awesomeface.png */; };
@@ -237,6 +238,7 @@
 		219ED5BE28D4E60900D0D000 /* Antonio-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Antonio-Bold.ttf"; sourceTree = "<group>"; };
 		219ED64828D8C90300D0D000 /* depth_test.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = depth_test.vs; sourceTree = "<group>"; };
 		219ED64A28D8C93A00D0D000 /* depth_test.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = depth_test.fs; sourceTree = "<group>"; };
+		219ED64C28D8D17700D0D000 /* shaderSingleColor.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shaderSingleColor.fs; sourceTree = "<group>"; };
 		21B677AA2868BD0F00311735 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		21EC9D7F28621E9E00C2B790 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		21EC9D8328621FE400C2B790 /* container.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = container.jpeg; path = OpenglTest/container.jpeg; sourceTree = SOURCE_ROOT; };
@@ -556,6 +558,7 @@
 				218301E428D38621004E1BC5 /* 1.model_loading.vs */,
 				219ED64828D8C90300D0D000 /* depth_test.vs */,
 				219ED64A28D8C93A00D0D000 /* depth_test.fs */,
+				219ED64C28D8D17700D0D000 /* shaderSingleColor.fs */,
 			);
 			path = glsl;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 			files = (
 				219ED64B28D8C93A00D0D000 /* depth_test.fs in Resources */,
 				219ED60128D4E60900D0D000 /* dancing_vampire.dae in Resources */,
+				219ED64D28D8D17700D0D000 /* shaderSingleColor.fs in Resources */,
 				219ED60C28D4E60900D0D000 /* glass_refl.png in Resources */,
 				219ED60828D4E60900D0D000 /* arm_showroom_refl.png in Resources */,
 				219ED62028D4E60900D0D000 /* back.jpg in Resources */,
