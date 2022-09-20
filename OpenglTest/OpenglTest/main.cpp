@@ -33,7 +33,7 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
-unsigned int loadTexture(const char *path);
+unsigned int loadTexture(const char *path, unsigned int repeatMode);
 
 float mixValue = 0.2f;
 unsigned int SCR_WIDTH = 800;
@@ -103,6 +103,18 @@ unsigned int SCR_HEIGHT = 600;
         -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
          5.0f, -0.5f, -5.0f,  2.0f, 2.0f
     };
+
+float transparentVertices[] = {
+        // positions         // texture Coords (swapped y coordinates because texture is flipped upside down)
+        0.0f,  0.5f,  0.0f,  0.0f,  0.0f,
+        0.0f, -0.5f,  0.0f,  0.0f,  1.0f,
+        1.0f, -0.5f,  0.0f,  1.0f,  1.0f,
+
+        0.0f,  0.5f,  0.0f,  0.0f,  0.0f,
+        1.0f, -0.5f,  0.0f,  1.0f,  1.0f,
+        1.0f,  0.5f,  0.0f,  1.0f,  0.0f
+    };
+
 
 glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
 //glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -187,6 +199,9 @@ int main(int argc, char *argv[]) {
     glDepthFunc(GL_LESS);//按照左手坐标系，应该z越小能通过测试，就能看到图像==
 //    glDepthMask(GL_FALSE);
     
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
     Shader shader("depth_test.vs", "depth_test.fs");
     
     
@@ -214,16 +229,39 @@ int main(int argc, char *argv[]) {
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
         glBindVertexArray(0);
+    
+    unsigned int transparentVAO, transparentVBO;
+    glGenVertexArrays(1, &transparentVAO);
+    glGenBuffers(1, &transparentVBO);
+    glBindVertexArray(transparentVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, transparentVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(transparentVertices), &transparentVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glBindVertexArray(0);
+    
 
         // load textures
         // -------------
-        unsigned int cubeTexture  = loadTexture(FileSystem::getPath("resources/textures/marble.jpg").c_str());
-        unsigned int floorTexture = loadTexture(FileSystem::getPath("resources/textures/metal.png").c_str());
-
+        unsigned int cubeTexture  = loadTexture(FileSystem::getPath("resources/textures/marble.jpg").c_str(), GL_REPEAT);
+        unsigned int floorTexture = loadTexture(FileSystem::getPath("resources/textures/metal.png").c_str(), GL_REPEAT);
+    unsigned int transparentTexture = loadTexture(FileSystem::getPath("resources/textures/grass.png").c_str(), GL_CLAMP_TO_EDGE);
+    
         // shader configuration
         // --------------------
         shader.use();
         shader.setInt("texture1", 0);
+    
+    std::vector<glm::vec3> vegetation;
+    vegetation.push_back(glm::vec3(-1.5f,  0.0f, -0.48f));
+    vegetation.push_back(glm::vec3( 1.5f,  0.0f,  0.51f));
+    vegetation.push_back(glm::vec3( 0.0f,  0.0f,  0.7f));
+    vegetation.push_back(glm::vec3(-0.3f,  0.0f, -2.3f));
+    vegetation.push_back(glm::vec3( 0.5f,  0.0f, -0.6f));
+    
+
     
 
 
@@ -268,6 +306,15 @@ int main(int argc, char *argv[]) {
         shader.setMat4("model", model1);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
+        
+        glBindVertexArray(transparentVAO);
+        glBindTexture(GL_TEXTURE_2D, transparentTexture);
+        for (unsigned int i = 0; i < vegetation.size(); i++) {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, vegetation[i]);
+            shader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
 
 
         glfwSwapBuffers(window);
@@ -368,7 +415,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 // utility function for loading a 2D texture from file
 // ---------------------------------------------------
-unsigned int loadTexture(char const *path)
+unsigned int loadTexture(char const *path, unsigned int repeatMode)
 {
     unsigned int textureID;
     glGenTextures(1, &textureID);
@@ -389,8 +436,8 @@ unsigned int loadTexture(char const *path)
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, repeatMode);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, repeatMode);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
