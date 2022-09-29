@@ -103,6 +103,8 @@
 		219ED64728D4E60900D0D000 /* Antonio-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 219ED5BE28D4E60900D0D000 /* Antonio-Bold.ttf */; };
 		219ED64928D8C90300D0D000 /* depth_test.vs in Resources */ = {isa = PBXBuildFile; fileRef = 219ED64828D8C90300D0D000 /* depth_test.vs */; };
 		219ED64B28D8C93A00D0D000 /* depth_test.fs in Resources */ = {isa = PBXBuildFile; fileRef = 219ED64A28D8C93A00D0D000 /* depth_test.fs */; };
+		219ED70328E5FE8A00D0D000 /* skybox.vs in Resources */ = {isa = PBXBuildFile; fileRef = 219ED70228E5FE8A00D0D000 /* skybox.vs */; };
+		219ED70528E5FEAD00D0D000 /* skybox.fs in Resources */ = {isa = PBXBuildFile; fileRef = 219ED70428E5FEAD00D0D000 /* skybox.fs */; };
 		21EC9D8428621FE400C2B790 /* container.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 21EC9D8328621FE400C2B790 /* container.jpeg */; };
 		21EC9D882862251100C2B790 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21EC9D862862251100C2B790 /* Texture.cpp */; };
 		21EC9D8A2862329300C2B790 /* awesomeface.png in Resources */ = {isa = PBXBuildFile; fileRef = 21EC9D892862329300C2B790 /* awesomeface.png */; };
@@ -237,6 +239,8 @@
 		219ED5BE28D4E60900D0D000 /* Antonio-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Antonio-Bold.ttf"; sourceTree = "<group>"; };
 		219ED64828D8C90300D0D000 /* depth_test.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = depth_test.vs; sourceTree = "<group>"; };
 		219ED64A28D8C93A00D0D000 /* depth_test.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = depth_test.fs; sourceTree = "<group>"; };
+		219ED70228E5FE8A00D0D000 /* skybox.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = skybox.vs; sourceTree = "<group>"; };
+		219ED70428E5FEAD00D0D000 /* skybox.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = skybox.fs; sourceTree = "<group>"; };
 		21B677AA2868BD0F00311735 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		21EC9D7F28621E9E00C2B790 /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		21EC9D8328621FE400C2B790 /* container.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = container.jpeg; path = OpenglTest/container.jpeg; sourceTree = SOURCE_ROOT; };
@@ -556,6 +560,8 @@
 				218301E428D38621004E1BC5 /* 1.model_loading.vs */,
 				219ED64828D8C90300D0D000 /* depth_test.vs */,
 				219ED64A28D8C93A00D0D000 /* depth_test.fs */,
+				219ED70228E5FE8A00D0D000 /* skybox.vs */,
+				219ED70428E5FEAD00D0D000 /* skybox.fs */,
 			);
 			path = glsl;
 			sourceTree = "<group>";
@@ -713,6 +719,7 @@
 				219ED61828D4E60900D0D000 /* cell_helmet_alpha.png in Resources */,
 				219ED62428D4E60900D0D000 /* planet.obj in Resources */,
 				219ED61628D4E60900D0D000 /* nanosuit.obj in Resources */,
+				219ED70328E5FE8A00D0D000 /* skybox.vs in Resources */,
 				21EC9D8E286A09FB00C2B790 /* gl_light_f.glsl in Resources */,
 				2100CD7C28CBA2C600D7DEC8 /* container2.png in Resources */,
 				219ED63F28D4E60900D0D000 /* one.lvl in Resources */,
@@ -726,6 +733,7 @@
 				219ED62928D4E60900D0D000 /* rock.mtl in Resources */,
 				219ED64928D8C90300D0D000 /* depth_test.vs in Resources */,
 				219ED62328D4E60900D0D000 /* mars.png in Resources */,
+				219ED70528E5FEAD00D0D000 /* skybox.fs in Resources */,
 				218301E528D38621004E1BC5 /* 1.model_loading.vs in Resources */,
 				2197CB89285F8CFF00166975 /* fragment.glsl in Resources */,
 				219ED5FD28D4E60900D0D000 /* Vampire_emission.png in Resources */,
