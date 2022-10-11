@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2100CD7C28CBA2C600D7DEC8 /* container2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2100CD7B28CBA2C600D7DEC8 /* container2.png */; };
 		2100CD7E28CF7A9100D7DEC8 /* container2_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */; };
+		216E734028EDDE2E00515038 /* envmap.vs in Resources */ = {isa = PBXBuildFile; fileRef = 216E733F28EDDE2E00515038 /* envmap.vs */; };
+		216E734228EDDE4E00515038 /* envmap.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734128EDDE4E00515038 /* envmap.fs */; };
 		217766FA27871A320055EB2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 217766F927871A320055EB2B /* Assets.xcassets */; };
 		2177670A27871A330055EB2B /* OpenglTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177670927871A330055EB2B /* OpenglTestTests.m */; };
 		2177671427871A330055EB2B /* OpenglTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177671327871A330055EB2B /* OpenglTestUITests.m */; };
@@ -132,6 +134,8 @@
 /* Begin PBXFileReference section */
 		2100CD7B28CBA2C600D7DEC8 /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
 		2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2_specular.png; sourceTree = "<group>"; };
+		216E733F28EDDE2E00515038 /* envmap.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = envmap.vs; sourceTree = "<group>"; };
+		216E734128EDDE4E00515038 /* envmap.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = envmap.fs; sourceTree = "<group>"; };
 		217766F027871A310055EB2B /* OpenglTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenglTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		217766F927871A320055EB2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2177670027871A320055EB2B /* OpenglTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenglTest.entitlements; sourceTree = "<group>"; };
@@ -562,6 +566,8 @@
 				219ED64A28D8C93A00D0D000 /* depth_test.fs */,
 				219ED70228E5FE8A00D0D000 /* skybox.vs */,
 				219ED70428E5FEAD00D0D000 /* skybox.fs */,
+				216E733F28EDDE2E00515038 /* envmap.vs */,
+				216E734128EDDE4E00515038 /* envmap.fs */,
 			);
 			path = glsl;
 			sourceTree = "<group>";
@@ -684,6 +690,7 @@
 				219ED60728D4E60900D0D000 /* leg_dif.png in Resources */,
 				219ED62728D4E60900D0D000 /* rock.obj in Resources */,
 				219ED61528D4E60900D0D000 /* helmet_diff.png in Resources */,
+				216E734228EDDE4E00515038 /* envmap.fs in Resources */,
 				219ED60B28D4E60900D0D000 /* glass_ddn.png in Resources */,
 				219ED61C28D4E60900D0D000 /* helmet_showroom_spec.png in Resources */,
 				219ED63C28D4E60900D0D000 /* solid.wav in Resources */,
@@ -692,6 +699,7 @@
 				219ED5FE28D4E60900D0D000 /* Vampire_diffuse.png in Resources */,
 				219ED63328D4E60900D0D000 /* cyborg.blend1 in Resources */,
 				219ED61328D4E60900D0D000 /* arm_dif.png in Resources */,
+				216E734028EDDE2E00515038 /* envmap.vs in Resources */,
 				219ED62C28D4E60900D0D000 /* diffuse.jpg in Resources */,
 				219ED63D28D4E60900D0D000 /* bleep.wav in Resources */,
 				219ED64428D4E60900D0D000 /* SIL Open Font License.txt in Resources */,
