@@ -11,6 +11,11 @@
 		2100CD7E28CF7A9100D7DEC8 /* container2_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */; };
 		216E734028EDDE2E00515038 /* envmap.vs in Resources */ = {isa = PBXBuildFile; fileRef = 216E733F28EDDE2E00515038 /* envmap.vs */; };
 		216E734228EDDE4E00515038 /* envmap.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734128EDDE4E00515038 /* envmap.fs */; };
+		216E734428F714B100515038 /* advanced_glsl.vs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734328F714B100515038 /* advanced_glsl.vs */; };
+		216E734628F714CC00515038 /* red.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734528F714CC00515038 /* red.fs */; };
+		216E734828F715AA00515038 /* green.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734728F715AA00515038 /* green.fs */; };
+		216E734A28F715CB00515038 /* blue.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734928F715CB00515038 /* blue.fs */; };
+		216E734C28F715D900515038 /* yellow.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734B28F715D900515038 /* yellow.fs */; };
 		217766FA27871A320055EB2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 217766F927871A320055EB2B /* Assets.xcassets */; };
 		2177670A27871A330055EB2B /* OpenglTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177670927871A330055EB2B /* OpenglTestTests.m */; };
 		2177671427871A330055EB2B /* OpenglTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177671327871A330055EB2B /* OpenglTestUITests.m */; };
@@ -136,6 +141,11 @@
 		2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2_specular.png; sourceTree = "<group>"; };
 		216E733F28EDDE2E00515038 /* envmap.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = envmap.vs; sourceTree = "<group>"; };
 		216E734128EDDE4E00515038 /* envmap.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = envmap.fs; sourceTree = "<group>"; };
+		216E734328F714B100515038 /* advanced_glsl.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = advanced_glsl.vs; sourceTree = "<group>"; };
+		216E734528F714CC00515038 /* red.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = red.fs; sourceTree = "<group>"; };
+		216E734728F715AA00515038 /* green.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = green.fs; sourceTree = "<group>"; };
+		216E734928F715CB00515038 /* blue.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = blue.fs; sourceTree = "<group>"; };
+		216E734B28F715D900515038 /* yellow.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = yellow.fs; sourceTree = "<group>"; };
 		217766F027871A310055EB2B /* OpenglTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenglTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		217766F927871A320055EB2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2177670027871A320055EB2B /* OpenglTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenglTest.entitlements; sourceTree = "<group>"; };
@@ -568,6 +578,11 @@
 				219ED70428E5FEAD00D0D000 /* skybox.fs */,
 				216E733F28EDDE2E00515038 /* envmap.vs */,
 				216E734128EDDE4E00515038 /* envmap.fs */,
+				216E734328F714B100515038 /* advanced_glsl.vs */,
+				216E734528F714CC00515038 /* red.fs */,
+				216E734728F715AA00515038 /* green.fs */,
+				216E734928F715CB00515038 /* blue.fs */,
+				216E734B28F715D900515038 /* yellow.fs */,
 			);
 			path = glsl;
 			sourceTree = "<group>";
@@ -680,12 +695,15 @@
 				219ED60C28D4E60900D0D000 /* glass_refl.png in Resources */,
 				219ED60828D4E60900D0D000 /* arm_showroom_refl.png in Resources */,
 				219ED62028D4E60900D0D000 /* back.jpg in Resources */,
+				216E734C28F715D900515038 /* yellow.fs in Resources */,
 				219ED63728D4E60900D0D000 /* cyborg_specular.png in Resources */,
+				216E734428F714B100515038 /* advanced_glsl.vs in Resources */,
 				217766FA27871A320055EB2B /* Assets.xcassets in Resources */,
 				219ED64628D4E60900D0D000 /* OCRAEXT.TTF in Resources */,
 				219ED62628D4E60900D0D000 /* planet.mtl in Resources */,
 				219ED61D28D4E60900D0D000 /* leg_showroom_spec.png in Resources */,
 				219ED61028D4E60900D0D000 /* hand_showroom_ddn.png in Resources */,
+				216E734A28F715CB00515038 /* blue.fs in Resources */,
 				21EC9D8C286A09AD00C2B790 /* gl_light.glsl in Resources */,
 				219ED60728D4E60900D0D000 /* leg_dif.png in Resources */,
 				219ED62728D4E60900D0D000 /* rock.obj in Resources */,
@@ -707,6 +725,7 @@
 				219ED62B28D4E60900D0D000 /* backpack.obj in Resources */,
 				21EC9D8428621FE400C2B790 /* container.jpeg in Resources */,
 				219ED62528D4E60900D0D000 /* source.txt in Resources */,
+				216E734828F715AA00515038 /* green.fs in Resources */,
 				219ED61F28D4E60900D0D000 /* body_showroom_spec.png in Resources */,
 				219ED63B28D4E60900D0D000 /* bleep.mp3 in Resources */,
 				219ED61A28D4E60900D0D000 /* helmet_showroom_refl.png in Resources */,
@@ -748,6 +767,7 @@
 				219ED60228D4E60900D0D000 /* hand_showroom_refl.png in Resources */,
 				218301E328D385DA004E1BC5 /* 1.model_loading.fs in Resources */,
 				219ED61228D4E60900D0D000 /* glass_dif.png in Resources */,
+				216E734628F714CC00515038 /* red.fs in Resources */,
 				219ED63428D4E60900D0D000 /* cyborg.blend in Resources */,
 				219ED63528D4E60900D0D000 /* cyborg_normal.png in Resources */,
 				219ED64728D4E60900D0D000 /* Antonio-Bold.ttf in Resources */,
