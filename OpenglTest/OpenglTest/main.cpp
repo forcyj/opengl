@@ -24,6 +24,8 @@
 #include "Model.h"
 #include "utils/filesystem.h"
 
+#include "geometry_shader.h"
+
 
 //void myDisplay(void) {
 //    glClear(GL_COLOR_BUFFER_BIT);
@@ -219,6 +221,9 @@ unsigned int loadCubemap(std::vector<std::string> faces)
 
 
 int main(int argc, char *argv[]) {
+    if (argc != 0) {
+        return geometry_shader::geometry_shader_entry();
+    }
     
 //    glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
 //    // 译注：下面就是矩阵初始化的一个例子，如果使用的是0.9.9及以上版本

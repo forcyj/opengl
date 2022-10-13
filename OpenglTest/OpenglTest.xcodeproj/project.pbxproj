@@ -16,6 +16,11 @@
 		216E734828F715AA00515038 /* green.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734728F715AA00515038 /* green.fs */; };
 		216E734A28F715CB00515038 /* blue.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734928F715CB00515038 /* blue.fs */; };
 		216E734C28F715D900515038 /* yellow.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734B28F715D900515038 /* yellow.fs */; };
+		216E734E28F86EC700515038 /* geometry_shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 216E734D28F86EC700515038 /* geometry_shader.cpp */; };
+		216E735128F86F2C00515038 /* geometry_shader_vs.vs in Resources */ = {isa = PBXBuildFile; fileRef = 216E735028F86F2C00515038 /* geometry_shader_vs.vs */; };
+		216E735328F86F5000515038 /* geometry_shader_fs.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E735228F86F5000515038 /* geometry_shader_fs.fs */; };
+		216E735628F8723400515038 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 216E735528F8723400515038 /* Model.cpp */; };
+		216E735828F8757200515038 /* geometry_shader_gs.gs in Resources */ = {isa = PBXBuildFile; fileRef = 216E735728F8757200515038 /* geometry_shader_gs.gs */; };
 		217766FA27871A320055EB2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 217766F927871A320055EB2B /* Assets.xcassets */; };
 		2177670A27871A330055EB2B /* OpenglTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177670927871A330055EB2B /* OpenglTestTests.m */; };
 		2177671427871A330055EB2B /* OpenglTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177671327871A330055EB2B /* OpenglTestUITests.m */; };
@@ -146,6 +151,12 @@
 		216E734728F715AA00515038 /* green.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = green.fs; sourceTree = "<group>"; };
 		216E734928F715CB00515038 /* blue.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = blue.fs; sourceTree = "<group>"; };
 		216E734B28F715D900515038 /* yellow.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = yellow.fs; sourceTree = "<group>"; };
+		216E734D28F86EC700515038 /* geometry_shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometry_shader.cpp; sourceTree = "<group>"; };
+		216E735028F86F2C00515038 /* geometry_shader_vs.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = geometry_shader_vs.vs; sourceTree = "<group>"; };
+		216E735228F86F5000515038 /* geometry_shader_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = geometry_shader_fs.fs; sourceTree = "<group>"; };
+		216E735428F8717500515038 /* geometry_shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = geometry_shader.h; sourceTree = "<group>"; };
+		216E735528F8723400515038 /* Model.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
+		216E735728F8757200515038 /* geometry_shader_gs.gs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = geometry_shader_gs.gs; sourceTree = "<group>"; };
 		217766F027871A310055EB2B /* OpenglTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenglTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		217766F927871A320055EB2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2177670027871A320055EB2B /* OpenglTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenglTest.entitlements; sourceTree = "<group>"; };
@@ -295,6 +306,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		216E734F28F86F0800515038 /* geometry_shader */ = {
+			isa = PBXGroup;
+			children = (
+				216E735428F8717500515038 /* geometry_shader.h */,
+				216E734D28F86EC700515038 /* geometry_shader.cpp */,
+				216E735028F86F2C00515038 /* geometry_shader_vs.vs */,
+				216E735228F86F5000515038 /* geometry_shader_fs.fs */,
+				216E735728F8757200515038 /* geometry_shader_gs.gs */,
+			);
+			name = geometry_shader;
+			sourceTree = "<group>";
+		};
 		217766E727871A310055EB2B = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +342,7 @@
 		217766F227871A310055EB2B /* OpenglTest */ = {
 			isa = PBXGroup;
 			children = (
+				216E734F28F86F0800515038 /* geometry_shader */,
 				219ED52128D4E60900D0D000 /* resources */,
 				218301E628D3875C004E1BC5 /* utils */,
 				21EC9D8528621FFC00C2B790 /* glsl */,
@@ -336,6 +360,7 @@
 				218301DE28D3822B004E1BC5 /* Mesh.cpp */,
 				218301DF28D3822B004E1BC5 /* Mesh.hpp */,
 				218301E128D38470004E1BC5 /* Model.h */,
+				216E735528F8723400515038 /* Model.cpp */,
 			);
 			path = OpenglTest;
 			sourceTree = "<group>";
@@ -694,6 +719,7 @@
 				219ED60128D4E60900D0D000 /* dancing_vampire.dae in Resources */,
 				219ED60C28D4E60900D0D000 /* glass_refl.png in Resources */,
 				219ED60828D4E60900D0D000 /* arm_showroom_refl.png in Resources */,
+				216E735828F8757200515038 /* geometry_shader_gs.gs in Resources */,
 				219ED62028D4E60900D0D000 /* back.jpg in Resources */,
 				216E734C28F715D900515038 /* yellow.fs in Resources */,
 				219ED63728D4E60900D0D000 /* cyborg_specular.png in Resources */,
@@ -756,6 +782,7 @@
 				219ED62F28D4E60900D0D000 /* ao.jpg in Resources */,
 				219ED64228D4E60900D0D000 /* two.lvl in Resources */,
 				219ED61B28D4E60900D0D000 /* cell_arm_alpha.png in Resources */,
+				216E735328F86F5000515038 /* geometry_shader_fs.fs in Resources */,
 				219ED61128D4E60900D0D000 /* body_showroom_refl.png in Resources */,
 				219ED62928D4E60900D0D000 /* rock.mtl in Resources */,
 				219ED64928D8C90300D0D000 /* depth_test.vs in Resources */,
@@ -772,6 +799,7 @@
 				219ED63528D4E60900D0D000 /* cyborg_normal.png in Resources */,
 				219ED64728D4E60900D0D000 /* Antonio-Bold.ttf in Resources */,
 				219ED63928D4E60900D0D000 /* LICENSE.txt in Resources */,
+				216E735128F86F2C00515038 /* geometry_shader_vs.vs in Resources */,
 				219ED61428D4E60900D0D000 /* cell_leg_alpha.png in Resources */,
 				219ED64128D4E60900D0D000 /* four.lvl in Resources */,
 				219ED62D28D4E60900D0D000 /* specular.jpg in Resources */,
@@ -813,7 +841,9 @@
 			files = (
 				21EC9D882862251100C2B790 /* Texture.cpp in Sources */,
 				2177672E278726840055EB2B /* main.cpp in Sources */,
+				216E734E28F86EC700515038 /* geometry_shader.cpp in Sources */,
 				2197CB85285F8B2800166975 /* Shader.cpp in Sources */,
+				216E735628F8723400515038 /* Model.cpp in Sources */,
 				2177672C278726540055EB2B /* glad.c in Sources */,
 				218301E028D3822B004E1BC5 /* Mesh.cpp in Sources */,
 			);

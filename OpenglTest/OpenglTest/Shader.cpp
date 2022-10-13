@@ -88,6 +88,81 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     glDeleteShader(fragment);
 }
 
+namespace {
+
+int createShader(const char* path, int type) {
+    std::string vertexCode;
+   
+    std::ifstream vShaderFile;
+    // 保证ifstream对象可以抛出异常：
+    vShaderFile.exceptions (std::ifstream::failbit | std::ifstream::badbit);
+   
+    try
+    {
+        // 打开文件
+        vShaderFile.open(path);
+        std::stringstream vShaderStream;
+        // 读取文件的缓冲内容到数据流中
+        vShaderStream << vShaderFile.rdbuf();
+        // 关闭文件处理器
+        vShaderFile.close();
+        // 转换数据流到string
+        vertexCode   = vShaderStream.str();
+    }
+    catch(std::ifstream::failure e)
+    {
+        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+    }
+    const char* vShaderCode = vertexCode.c_str();
+
+    unsigned int vertex;
+    int success;
+    char infoLog[512];
+
+    // 顶点着色器
+    vertex = glCreateShader(type);
+    glShaderSource(vertex, 1, &vShaderCode, NULL);
+    glCompileShader(vertex);
+    // 打印编译错误（如果有的话）
+    glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
+    if(!success)
+    {
+        glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
+    return vertex;
+}
+
+}
+
+Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath) {
+    
+
+    unsigned int vertex = createShader(vertexPath, GL_VERTEX_SHADER);
+    unsigned int fragment = createShader(fragmentPath, GL_FRAGMENT_SHADER);
+    unsigned int geometry = createShader(geometryPath, GL_GEOMETRY_SHADER);
+    
+    // 着色器程序
+    ID = glCreateProgram();
+    glAttachShader(ID, vertex);
+    glAttachShader(ID, fragment);
+    glAttachShader(ID, geometry);
+    glLinkProgram(ID);
+    // 打印连接错误（如果有的话）
+    int success;
+    char infoLog[512];
+    glGetProgramiv(ID, GL_LINK_STATUS, &success);
+    if(!success)
+    {
+        glGetProgramInfoLog(ID, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+    }
+
+    // 删除着色器，它们已经链接到我们的程序中了，已经不再需要了
+    glDeleteShader(vertex);
+    glDeleteShader(fragment);
+    glDeleteShader(geometry);
+}
 
 void Shader::use()
 {
