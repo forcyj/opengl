@@ -25,6 +25,7 @@
 #include "utils/filesystem.h"
 
 #include "geometry_shader.h"
+#include "instancing.hpp"
 
 
 //void myDisplay(void) {
@@ -221,9 +222,17 @@ unsigned int loadCubemap(std::vector<std::string> faces)
 
 
 int main(int argc, char *argv[]) {
+//    if (argc != 0) {
+//        return geometry_shader::geometry_shader_entry();
+//    }
+
     if (argc != 0) {
-        return geometry_shader::geometry_shader_entry();
+        return instancing::instancing_main();
     }
+    
+        
+    
+    
     
 //    glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
 //    // 译注：下面就是矩阵初始化的一个例子，如果使用的是0.9.9及以上版本

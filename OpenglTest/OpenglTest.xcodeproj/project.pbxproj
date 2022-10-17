@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2100CD7C28CBA2C600D7DEC8 /* container2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2100CD7B28CBA2C600D7DEC8 /* container2.png */; };
 		2100CD7E28CF7A9100D7DEC8 /* container2_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */; };
+		214057CD28FDAA8200C647FA /* instancing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214057CB28FDAA8200C647FA /* instancing.cpp */; };
+		214057CF28FDAAFE00C647FA /* instancing_fs.fs in Resources */ = {isa = PBXBuildFile; fileRef = 214057CE28FDAAFE00C647FA /* instancing_fs.fs */; };
+		214057D128FDAB2B00C647FA /* instancing_vs.vs in Resources */ = {isa = PBXBuildFile; fileRef = 214057D028FDAB2B00C647FA /* instancing_vs.vs */; };
 		216E734028EDDE2E00515038 /* envmap.vs in Resources */ = {isa = PBXBuildFile; fileRef = 216E733F28EDDE2E00515038 /* envmap.vs */; };
 		216E734228EDDE4E00515038 /* envmap.fs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734128EDDE4E00515038 /* envmap.fs */; };
 		216E734428F714B100515038 /* advanced_glsl.vs in Resources */ = {isa = PBXBuildFile; fileRef = 216E734328F714B100515038 /* advanced_glsl.vs */; };
@@ -144,6 +147,10 @@
 /* Begin PBXFileReference section */
 		2100CD7B28CBA2C600D7DEC8 /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
 		2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2_specular.png; sourceTree = "<group>"; };
+		214057CB28FDAA8200C647FA /* instancing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = instancing.cpp; sourceTree = "<group>"; };
+		214057CC28FDAA8200C647FA /* instancing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = instancing.hpp; sourceTree = "<group>"; };
+		214057CE28FDAAFE00C647FA /* instancing_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing_fs.fs; sourceTree = "<group>"; };
+		214057D028FDAB2B00C647FA /* instancing_vs.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing_vs.vs; sourceTree = "<group>"; };
 		216E733F28EDDE2E00515038 /* envmap.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = envmap.vs; sourceTree = "<group>"; };
 		216E734128EDDE4E00515038 /* envmap.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = envmap.fs; sourceTree = "<group>"; };
 		216E734328F714B100515038 /* advanced_glsl.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = advanced_glsl.vs; sourceTree = "<group>"; };
@@ -306,6 +313,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		214057CA28FDA9F400C647FA /* instancing */ = {
+			isa = PBXGroup;
+			children = (
+				214057CB28FDAA8200C647FA /* instancing.cpp */,
+				214057CC28FDAA8200C647FA /* instancing.hpp */,
+				214057CE28FDAAFE00C647FA /* instancing_fs.fs */,
+				214057D028FDAB2B00C647FA /* instancing_vs.vs */,
+			);
+			name = instancing;
+			sourceTree = "<group>";
+		};
 		216E734F28F86F0800515038 /* geometry_shader */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,6 +360,7 @@
 		217766F227871A310055EB2B /* OpenglTest */ = {
 			isa = PBXGroup;
 			children = (
+				214057CA28FDA9F400C647FA /* instancing */,
 				216E734F28F86F0800515038 /* geometry_shader */,
 				219ED52128D4E60900D0D000 /* resources */,
 				218301E628D3875C004E1BC5 /* utils */,
@@ -731,6 +750,7 @@
 				219ED61028D4E60900D0D000 /* hand_showroom_ddn.png in Resources */,
 				216E734A28F715CB00515038 /* blue.fs in Resources */,
 				21EC9D8C286A09AD00C2B790 /* gl_light.glsl in Resources */,
+				214057CF28FDAAFE00C647FA /* instancing_fs.fs in Resources */,
 				219ED60728D4E60900D0D000 /* leg_dif.png in Resources */,
 				219ED62728D4E60900D0D000 /* rock.obj in Resources */,
 				219ED61528D4E60900D0D000 /* helmet_diff.png in Resources */,
@@ -793,6 +813,7 @@
 				219ED5FD28D4E60900D0D000 /* Vampire_emission.png in Resources */,
 				219ED60228D4E60900D0D000 /* hand_showroom_refl.png in Resources */,
 				218301E328D385DA004E1BC5 /* 1.model_loading.fs in Resources */,
+				214057D128FDAB2B00C647FA /* instancing_vs.vs in Resources */,
 				219ED61228D4E60900D0D000 /* glass_dif.png in Resources */,
 				216E734628F714CC00515038 /* red.fs in Resources */,
 				219ED63428D4E60900D0D000 /* cyborg.blend in Resources */,
@@ -844,6 +865,7 @@
 				216E734E28F86EC700515038 /* geometry_shader.cpp in Sources */,
 				2197CB85285F8B2800166975 /* Shader.cpp in Sources */,
 				216E735628F8723400515038 /* Model.cpp in Sources */,
+				214057CD28FDAA8200C647FA /* instancing.cpp in Sources */,
 				2177672C278726540055EB2B /* glad.c in Sources */,
 				218301E028D3822B004E1BC5 /* Mesh.cpp in Sources */,
 			);
