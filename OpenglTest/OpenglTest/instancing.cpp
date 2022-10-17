@@ -84,7 +84,7 @@ void checkError(unsigned int target, unsigned int status) {
     char infoLog[512];
     glGetShaderiv(target, status, &success);
     if(!success)
-    {GL_MAX_GEOMETRY_UNIFORM_COMPONENTS
+    {
         glGetShaderInfoLog(target, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
