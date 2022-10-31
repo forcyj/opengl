@@ -12,6 +12,8 @@
 		212E2B1C2910172B00749E05 /* instancing2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 212E2B1A2910172B00749E05 /* instancing2.cpp */; };
 		212E2B1E291018DF00749E05 /* instancing2_vs.vs in Resources */ = {isa = PBXBuildFile; fileRef = 212E2B1D291018DF00749E05 /* instancing2_vs.vs */; };
 		212E2B20291018FC00749E05 /* instancing2_fs.fs in Resources */ = {isa = PBXBuildFile; fileRef = 212E2B1F291018FC00749E05 /* instancing2_fs.fs */; };
+		212E2B2229101F7100749E05 /* instancing2_asteroids_vs.vs in Resources */ = {isa = PBXBuildFile; fileRef = 212E2B2129101F7100749E05 /* instancing2_asteroids_vs.vs */; };
+		212E2B2429101F8600749E05 /* instancing2_asteroids_fs.fs in Resources */ = {isa = PBXBuildFile; fileRef = 212E2B2329101F8600749E05 /* instancing2_asteroids_fs.fs */; };
 		214057CD28FDAA8200C647FA /* instancing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214057CB28FDAA8200C647FA /* instancing.cpp */; };
 		214057CF28FDAAFE00C647FA /* instancing_fs.fs in Resources */ = {isa = PBXBuildFile; fileRef = 214057CE28FDAAFE00C647FA /* instancing_fs.fs */; };
 		214057D128FDAB2B00C647FA /* instancing_vs.vs in Resources */ = {isa = PBXBuildFile; fileRef = 214057D028FDAB2B00C647FA /* instancing_vs.vs */; };
@@ -154,6 +156,8 @@
 		212E2B1B2910172B00749E05 /* instancing2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = instancing2.hpp; sourceTree = "<group>"; };
 		212E2B1D291018DF00749E05 /* instancing2_vs.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing2_vs.vs; sourceTree = "<group>"; };
 		212E2B1F291018FC00749E05 /* instancing2_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing2_fs.fs; sourceTree = "<group>"; };
+		212E2B2129101F7100749E05 /* instancing2_asteroids_vs.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing2_asteroids_vs.vs; sourceTree = "<group>"; };
+		212E2B2329101F8600749E05 /* instancing2_asteroids_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing2_asteroids_fs.fs; sourceTree = "<group>"; };
 		214057CB28FDAA8200C647FA /* instancing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = instancing.cpp; sourceTree = "<group>"; };
 		214057CC28FDAA8200C647FA /* instancing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = instancing.hpp; sourceTree = "<group>"; };
 		214057CE28FDAAFE00C647FA /* instancing_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing_fs.fs; sourceTree = "<group>"; };
@@ -331,6 +335,8 @@
 				214057D028FDAB2B00C647FA /* instancing_vs.vs */,
 				212E2B1D291018DF00749E05 /* instancing2_vs.vs */,
 				212E2B1F291018FC00749E05 /* instancing2_fs.fs */,
+				212E2B2129101F7100749E05 /* instancing2_asteroids_vs.vs */,
+				212E2B2329101F8600749E05 /* instancing2_asteroids_fs.fs */,
 			);
 			name = instancing;
 			sourceTree = "<group>";
@@ -765,6 +771,7 @@
 				219ED60728D4E60900D0D000 /* leg_dif.png in Resources */,
 				219ED62728D4E60900D0D000 /* rock.obj in Resources */,
 				219ED61528D4E60900D0D000 /* helmet_diff.png in Resources */,
+				212E2B2229101F7100749E05 /* instancing2_asteroids_vs.vs in Resources */,
 				216E734228EDDE4E00515038 /* envmap.fs in Resources */,
 				219ED60B28D4E60900D0D000 /* glass_ddn.png in Resources */,
 				219ED61C28D4E60900D0D000 /* helmet_showroom_spec.png in Resources */,
@@ -835,6 +842,7 @@
 				219ED63928D4E60900D0D000 /* LICENSE.txt in Resources */,
 				216E735128F86F2C00515038 /* geometry_shader_vs.vs in Resources */,
 				219ED61428D4E60900D0D000 /* cell_leg_alpha.png in Resources */,
+				212E2B2429101F8600749E05 /* instancing2_asteroids_fs.fs in Resources */,
 				219ED64128D4E60900D0D000 /* four.lvl in Resources */,
 				219ED62D28D4E60900D0D000 /* specular.jpg in Resources */,
 				219ED61728D4E60900D0D000 /* leg_showroom_refl.png in Resources */,
