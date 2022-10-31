@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2100CD7C28CBA2C600D7DEC8 /* container2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2100CD7B28CBA2C600D7DEC8 /* container2.png */; };
 		2100CD7E28CF7A9100D7DEC8 /* container2_specular.png in Resources */ = {isa = PBXBuildFile; fileRef = 2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */; };
+		212E2B1C2910172B00749E05 /* instancing2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 212E2B1A2910172B00749E05 /* instancing2.cpp */; };
+		212E2B1E291018DF00749E05 /* instancing2_vs.vs in Resources */ = {isa = PBXBuildFile; fileRef = 212E2B1D291018DF00749E05 /* instancing2_vs.vs */; };
+		212E2B20291018FC00749E05 /* instancing2_fs.fs in Resources */ = {isa = PBXBuildFile; fileRef = 212E2B1F291018FC00749E05 /* instancing2_fs.fs */; };
 		214057CD28FDAA8200C647FA /* instancing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214057CB28FDAA8200C647FA /* instancing.cpp */; };
 		214057CF28FDAAFE00C647FA /* instancing_fs.fs in Resources */ = {isa = PBXBuildFile; fileRef = 214057CE28FDAAFE00C647FA /* instancing_fs.fs */; };
 		214057D128FDAB2B00C647FA /* instancing_vs.vs in Resources */ = {isa = PBXBuildFile; fileRef = 214057D028FDAB2B00C647FA /* instancing_vs.vs */; };
@@ -147,6 +150,10 @@
 /* Begin PBXFileReference section */
 		2100CD7B28CBA2C600D7DEC8 /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
 		2100CD7D28CF7A9000D7DEC8 /* container2_specular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2_specular.png; sourceTree = "<group>"; };
+		212E2B1A2910172B00749E05 /* instancing2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = instancing2.cpp; sourceTree = "<group>"; };
+		212E2B1B2910172B00749E05 /* instancing2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = instancing2.hpp; sourceTree = "<group>"; };
+		212E2B1D291018DF00749E05 /* instancing2_vs.vs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing2_vs.vs; sourceTree = "<group>"; };
+		212E2B1F291018FC00749E05 /* instancing2_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing2_fs.fs; sourceTree = "<group>"; };
 		214057CB28FDAA8200C647FA /* instancing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = instancing.cpp; sourceTree = "<group>"; };
 		214057CC28FDAA8200C647FA /* instancing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = instancing.hpp; sourceTree = "<group>"; };
 		214057CE28FDAAFE00C647FA /* instancing_fs.fs */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = instancing_fs.fs; sourceTree = "<group>"; };
@@ -318,8 +325,12 @@
 			children = (
 				214057CB28FDAA8200C647FA /* instancing.cpp */,
 				214057CC28FDAA8200C647FA /* instancing.hpp */,
+				212E2B1A2910172B00749E05 /* instancing2.cpp */,
+				212E2B1B2910172B00749E05 /* instancing2.hpp */,
 				214057CE28FDAAFE00C647FA /* instancing_fs.fs */,
 				214057D028FDAB2B00C647FA /* instancing_vs.vs */,
+				212E2B1D291018DF00749E05 /* instancing2_vs.vs */,
+				212E2B1F291018FC00749E05 /* instancing2_fs.fs */,
 			);
 			name = instancing;
 			sourceTree = "<group>";
@@ -770,6 +781,7 @@
 				219ED60E28D4E60900D0D000 /* nanosuit.mtl in Resources */,
 				219ED62B28D4E60900D0D000 /* backpack.obj in Resources */,
 				21EC9D8428621FE400C2B790 /* container.jpeg in Resources */,
+				212E2B1E291018DF00749E05 /* instancing2_vs.vs in Resources */,
 				219ED62528D4E60900D0D000 /* source.txt in Resources */,
 				216E734828F715AA00515038 /* green.fs in Resources */,
 				219ED61F28D4E60900D0D000 /* body_showroom_spec.png in Resources */,
@@ -805,6 +817,7 @@
 				216E735328F86F5000515038 /* geometry_shader_fs.fs in Resources */,
 				219ED61128D4E60900D0D000 /* body_showroom_refl.png in Resources */,
 				219ED62928D4E60900D0D000 /* rock.mtl in Resources */,
+				212E2B20291018FC00749E05 /* instancing2_fs.fs in Resources */,
 				219ED64928D8C90300D0D000 /* depth_test.vs in Resources */,
 				219ED62328D4E60900D0D000 /* mars.png in Resources */,
 				219ED70528E5FEAD00D0D000 /* skybox.fs in Resources */,
@@ -860,6 +873,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				212E2B1C2910172B00749E05 /* instancing2.cpp in Sources */,
 				21EC9D882862251100C2B790 /* Texture.cpp in Sources */,
 				2177672E278726840055EB2B /* main.cpp in Sources */,
 				216E734E28F86EC700515038 /* geometry_shader.cpp in Sources */,

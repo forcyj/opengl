@@ -25,7 +25,7 @@
 #include "utils/filesystem.h"
 
 #include "geometry_shader.h"
-#include "instancing.hpp"
+#include "instancing2.hpp"
 
 
 //void myDisplay(void) {
@@ -227,7 +227,7 @@ int main(int argc, char *argv[]) {
 //    }
 
     if (argc != 0) {
-        return instancing::instancing_main();
+        return instancing2::instancing_main();
     }
     
         
