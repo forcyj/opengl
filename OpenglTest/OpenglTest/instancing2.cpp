@@ -51,7 +51,7 @@ unsigned int SCR_WIDTH = 800;
 unsigned int SCR_HEIGHT = 600;
 
 
-glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  55.0f);
+glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  200.0f);
 //glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 //glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 bool keys[1024];
@@ -137,8 +137,8 @@ int instancing_main() {
         glm::mat4* modelMatrices;
         modelMatrices = new glm::mat4[amount];
         srand(static_cast<unsigned int>(glfwGetTime())); // initialize random seed
-        float radius = 50.0;
-        float offset = 2.5f;
+        float radius = 150.0;
+        float offset = 25.0f;
         for (unsigned int i = 0; i < amount; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
